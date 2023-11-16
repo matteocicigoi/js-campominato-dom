@@ -70,10 +70,19 @@ function createEvent(containerTag, scoreTag){
         if(!selected.includes(cellSelected.innerHTML)){
             if(!isNaN(Number(cellSelected.innerHTML)) && !end){
                 selected.push(cellSelected.innerHTML);
-                if(bombArray.includes(Number(cellSelected.innerHTML))){
-                    cellSelected.classList.add('bomb');
+                if(bombArray.includes(Number(cellSelected.innerHTML)) || cell - score - bombNumber - 1 === 0){
+                    let text;
+                    if(bombArray.includes(Number(cellSelected.innerHTML))){
+                        cellSelected.classList.add('bomb');
+                        text = createElement('h2', ['result'] , 'Hai perso');
+                        allBomb(bombArray, '.cell');
+                    }else{
+                        cellSelected.classList.add('selected');
+                        score++;
+                        scoreElement.innerHTML = 'Punteggio: ' + score;
+                        text = createElement('h2', ['result'] , 'Hai vinto');
+                    }
                     end = true;
-                    const text = createElement('h2', ['result'] , 'Hai perso');
                     const scoreResult = createElement('h2', ['result'] , 'Punteggio: ' + score);
                     element.append(createElement('div', ['end'], text));
                     element.querySelector('.end').append(scoreResult);
@@ -81,13 +90,6 @@ function createEvent(containerTag, scoreTag){
                     cellSelected.classList.add('selected');
                     score++;
                     scoreElement.innerHTML = 'Punteggio: ' + score;
-                    if(cell - score - bombNumber === 0){
-                        end = true;
-                        const text = createElement('h2', ['result'] , 'Hai vinto');
-                        const scoreResult = createElement('h2', ['result'] , 'Punteggio: ' + score);
-                        element.append(createElement('div', ['end'], text));
-                        element.querySelector('.end').append(scoreResult);
-                    }
                 }
             }
         }
@@ -100,27 +102,22 @@ function random(numberMin, numberMax){
 // Genera le bombe
 function bomb(numberCell, numberBomb){
     const bomb = [];
-    do{
+    while(bomb.length < numberBomb){
         const number = random(1, numberCell);
         if(!bomb.includes(number)){
             bomb.push(number);
         }
-    }while(bomb.length < numberBomb);
+    }
     return bomb;
+}
+// Mostra tutte le bombe
+function allBomb(bombArray, cellTag){
+    const element = document.querySelectorAll(cellTag);
+    for(let i = 0; i < bombArray.length - 1; i++){
+        element[bombArray[i]].classList.add('bomb');
+    }
 }
 /* Main */
 startGame('header button', 'difficulty', '.container', '.score h2');
 startGame('main h2', 'difficulty', '.container', '.score h2');
 createEvent('.container', '.score h2');
-
-
-
-/*
-
-Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-
-
-Superbonus 2
-Quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste.
-
-*/
