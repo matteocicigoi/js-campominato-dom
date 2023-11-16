@@ -65,7 +65,6 @@ function createEvent(containerTag, scoreTag){
             selected = [];
             end = false;
         }
-        console.log(bombArray);
         const cellSelected = event.srcElement;
         if(!selected.includes(cellSelected.innerHTML)){
             if(!isNaN(Number(cellSelected.innerHTML)) && !end){
