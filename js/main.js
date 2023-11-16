@@ -17,9 +17,11 @@
  }
 
 // Inizia il gioco
-function startGame(tag, difficultyTag, containerTag){
+function startGame(tag, difficultyTag, containerTag, scoreTag){
     const element = document.querySelector(tag);
     const container = document.querySelector(containerTag);
+    const score = document.querySelector(scoreTag);
+    const fragment = document.createDocumentFragment();
     element.addEventListener('click', function(){
     resetContentHtml(container);
     const difficulty = document.getElementById(difficultyTag).value;
@@ -37,41 +39,87 @@ function startGame(tag, difficultyTag, containerTag){
     }
     for(let i = 1; i <= size; i++){
         const cell = createElement('div', ['cell', classSize], i);
-        container.append(cell);
+        fragment.append(cell);
     }
+    container.append(fragment);
+    score.innerHTML = 'Punteggio: 0';
     });
 }
 
 // Crea l'evento delle celle
-function createEvent(containerTag){
+function createEvent(containerTag, scoreTag){
     const element = document.querySelector(containerTag);
+    const scoreElement = document.querySelector(scoreTag);
+    const bombNumber = 16;
+    let bombArray = [];
+    let cellNumber;
+    let end = false;
+    let score = 0;
+    let selected = [];
     element.addEventListener('click', function(event){
+        const cell = document.querySelectorAll('.cell').length;
+        if(bombArray.length === 0 || cellNumber !== cell || end){
+            bombArray = bomb(cell, bombNumber);
+            cellNumber = cell;
+            score = 0;
+            selected = [];
+            end = false;
+        }
+        console.log(bombArray);
         const cellSelected = event.srcElement;
-        cellSelected.classList.add('selected');
-        console.log(cellSelected.innerHTML);
+        if(!selected.includes(cellSelected.innerHTML)){
+            if(!isNaN(Number(cellSelected.innerHTML)) && !end){
+                selected.push(cellSelected.innerHTML);
+                if(bombArray.includes(Number(cellSelected.innerHTML))){
+                    cellSelected.classList.add('bomb');
+                    end = true;
+                    const text = createElement('h2', ['result'] , 'Hai perso');
+                    const scoreResult = createElement('h2', ['result'] , 'Punteggio: ' + score);
+                    element.append(createElement('div', ['end'], text));
+                    element.querySelector('.end').append(scoreResult);
+                }else{
+                    cellSelected.classList.add('selected');
+                    score++;
+                    scoreElement.innerHTML = 'Punteggio: ' + score;
+                    if(cell - score - bombNumber === 0){
+                        end = true;
+                        const text = createElement('h2', ['result'] , 'Hai vinto');
+                        const scoreResult = createElement('h2', ['result'] , 'Punteggio: ' + score);
+                        element.append(createElement('div', ['end'], text));
+                        element.querySelector('.end').append(scoreResult);
+                    }
+                }
+            }
+        }
     });
 }
-
+// Genera un numero
+function random(numberMin, numberMax){
+    return(Math.floor(Math.random() * (numberMax - numberMin + 1)) + numberMin);
+}
+// Genera le bombe
+function bomb(numberCell, numberBomb){
+    const bomb = [];
+    do{
+        const number = random(1, numberCell);
+        if(!bomb.includes(number)){
+            bomb.push(number);
+        }
+    }while(bomb.length < numberBomb);
+    return bomb;
+}
 /* Main */
-startGame('header button', 'difficulty', '.container');
-startGame('main h2', 'difficulty', '.container');
-createEvent('.container');
+startGame('header button', 'difficulty', '.container', '.score h2');
+startGame('main h2', 'difficulty', '.container', '.score h2');
+createEvent('.container', '.score h2');
 
 
 
 /*
-Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. :bomba:
-:esclamazione:Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
-In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
-La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
+
 Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-BONUS:
-Aggiungere una select accanto al bottone di generazione, che fornisca una scelta tra tre diversi livelli di difficoltà:
-- difficoltà 1 ⇒ 100 caselle, con un numero compreso tra 1 e 100, divise in 10 caselle per 10 righe;
-- difficoltà 2 ⇒ 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
-- difficoltà 3 ⇒ 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
-Superbonus 1
-Quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle.
+
+
 Superbonus 2
 Quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste.
 

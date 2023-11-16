@@ -16,15 +16,20 @@
 </head>
 <body class="flex">
     <header class="flex">
-        <img src="img/logo.png" alt="logo">
-        <h1>Campo Minato</h1>
-        <label for="difficulty">Difficoltà:</label>
-        <select name="difficulty" id="difficulty">
-        <option value="1">Hard</option>
-        <option value="2">Medium</option>
-        <option value="3">Easy</option>
-        </select>
-        <button>Play</button>
+        <div class="box flex">
+            <img src="img/logo.png" alt="logo">
+            <h1>Campo Minato</h1>
+        </div>
+        <div class="box flex score"><h2>Inizia la partita</h2></div>
+        <div class="box flex">
+            <label for="difficulty">Difficoltà:</label>
+            <select name="difficulty" id="difficulty">
+            <option value="1">Difficile</option>
+            <option value="2">Normale</option>
+            <option value="3">Facile</option>
+            </select>
+            <button>Play</button>
+        </div>
     </header>
     <main class="flex">
         <div class="container flex">
