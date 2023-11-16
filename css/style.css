@@ -1,0 +1,103 @@
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* common */
+.flex{
+    display: flex;
+}
+body{
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* header */
+header{
+ align-items: center;
+ padding-right: 25px;
+ padding-bottom: 10px;
+}
+
+header h1{
+    font-size: 2.8125rem;
+}
+
+header label{
+    margin-left: auto;
+    font-size: 20px;
+}
+
+header select{
+    height: 30px;
+    width: 240px;
+    margin: 0 7px;
+    font-size: 20px;
+}
+header button{
+    height: 30px;
+    width: 120px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+header img{
+    height: 90px;
+    display: block;
+}
+
+/* main */
+main{
+    flex-grow: 1;
+    background-color: #7FFFD4;
+    justify-content: center;
+    align-items: center;
+}
+
+main .container{
+    width: 700px;
+    height: 700px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+main .container h2{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 4.375rem;
+    cursor: pointer;
+}
+main .cell{
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+main .cell.start{
+    width: 100%;
+    height: 100%;
+    cursor: auto;
+}
+main .cell.s-10{
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+main .cell.s-9{
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+main .cell.s-7{
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+main .cell.selected{
+    background-color: aqua;
+}
+/* footer */
+footer{
+    padding: 30px 25px;
+    font-size: 1.625rem;
+}

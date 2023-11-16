@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Griglia Campo Minato</title>
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Fine Google Fonts-->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Fine Font Awesome -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="flex">
+    <header class="flex">
+        <img src="img/logo.png" alt="logo">
+        <h1>Campo Minato</h1>
+        <label for="difficulty">Difficoltà:</label>
+        <select name="difficulty" id="difficulty">
+        <option value="1">Hard</option>
+        <option value="2">Medium</option>
+        <option value="3">Easy</option>
+        </select>
+        <button>Play</button>
+    </header>
+    <main class="flex">
+        <div class="container flex">
+            <div class="cell start"><h2>Gioca</h2></div>
+        </div>
+    </main>
+    <footer>
+        <span>Made with <i class="fa-solid fa-heart"></i> by <a href="#">Boolean</a></span>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
